@@ -26,7 +26,7 @@
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
             </snapshots>
-        </repository>
+		</repository>
     </repositories>
 	<dependencies>
 		<dependency>
@@ -127,6 +127,40 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+				  <execution>
+					<id>copy-resources</id>
+					<!-- here the phase you need -->
+					<phase>package</phase>
+					<goals>
+					  <goal>copy-resources</goal>
+					</goals>
+					<configuration>
+					  <outputDirectory>${project.build.directory}/substrate_lib</outputDirectory>
+					  <resources>          
+						<resource>
+						  <directory>${project.build.directory}/../eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/plugins/</directory>
+							<includes>
+								<include>*.jar</include>
+							</includes>
+							<excludes>
+								<exclude>org.eclipse.osgi_3.15.100.v20191114-1701.jar</exclude>
+							</excludes>							
+						</resource>
+						<resource>
+						  <directory>${project.build.directory}/../eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/features/</directory>
+							<includes>
+								<include>*.jar</include>
+							</includes>						
+						</resource>
+					  </resources>              
+					</configuration>            
+				  </execution>
+				</executions>
+			  </plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>3.1.1</version>
@@ -166,7 +200,7 @@
 						-Datomos.substrate=${project.build.directory}
 						--allow-incomplete-classpath
 						--no-fallback
-						--initialize-at-build-time=org.atomos.framework,org.eclipse.osgi,org.eclipse.equinox.log,org.osgi.framework,org.osgi.dto,org.osgi.service.condpermadmin,org.osgi.service.log,org.osgi.service.packageadmin,org.osgi.service.permissionadmin,org.osgi.service.resolver,org.osgi.service.startlevel,org.osgi.service.url,org.osgi.util.tracker,org.osgi.resource,org.apache.felix.resolver,javax.servlet
+						--initialize-at-build-time=org.eclipse.jdt.ls.core.internal,org.slf4j,org.atomos.framework,org.eclipse.osgi,org.eclipse.equinox.log,org.osgi.framework,org.osgi.dto,org.osgi.service.condpermadmin,org.osgi.service.log,org.osgi.service.packageadmin,org.osgi.service.permissionadmin,org.osgi.service.resolver,org.osgi.service.startlevel,org.osgi.service.url,org.osgi.util.tracker,org.osgi.resource,org.apache.felix.resolver,javax.servlet
 						-H:ReflectionConfigurationFiles=${project.basedir}/graal_class_config.json
 						-H:ResourceConfigurationFiles=${project.basedir}/graal_resource_config.json
 						-H:+ReportUnsupportedElementsAtRuntime

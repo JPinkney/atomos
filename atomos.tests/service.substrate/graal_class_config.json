@@ -193,5 +193,11 @@
     "name" : "org.apache.felix.webconsole.internal.compendium.LogServlet",
     "allPublicConstructors" : true,
     "allPublicMethods" : true
+  },
+  {
+    "name": "org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin",
+    "allPublicConstructors" : true,
+    "allPublicMethods" : true
   }
+
 ]
